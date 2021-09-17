@@ -12,6 +12,10 @@
     <artifactId>file-server</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <javaModuleName>file-server</javaModuleName>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
