@@ -51,14 +51,17 @@ public class ParameterProcessor {
 
         if (ssl) {
             System.setProperty("ssl", "true");
+            log("enable ssl");
         }
 
         if (port > 0) {
             System.setProperty("port", String.valueOf(port));
+            log("set port: " + port);
         }
 
         if (dir != null) {
             System.setProperty("user.dir", dir);
+            log("set root dir: " + dir);
         }
     }
 
@@ -70,5 +73,9 @@ public class ParameterProcessor {
         StringBuilder sb = new StringBuilder();
         sb.append("java -jar ").append(javaModuleName).append(".jar");
         return sb.toString();
+    }
+
+    private void log(String str) {
+        System.out.println(str);
     }
 }
