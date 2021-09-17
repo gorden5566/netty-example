@@ -8,6 +8,7 @@ import com.gorden5566.example.http.HttpStaticFileServer;
  */
 public class BootStrap {
     public static void main(String[] args) throws Exception {
+        ParameterProcessor.process(args);
         HttpStaticFileServer.main(args);
     }
 }
