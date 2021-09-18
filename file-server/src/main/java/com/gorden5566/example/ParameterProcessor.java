@@ -22,7 +22,7 @@ public class ParameterProcessor {
     private boolean ssl = false;
 
     @Parameter(names = {"-p", "--port"}, order = 3, description = "set listen port")
-    private int port = 0;
+    private Integer port = null;
 
     @Parameter(names = {"-d", "--dir"}, order = 4, description = "set root dir")
     private String dir = null;
@@ -54,7 +54,7 @@ public class ParameterProcessor {
             log("enable ssl");
         }
 
-        if (port > 0) {
+        if (port != null && port > 0) {
             System.setProperty("port", String.valueOf(port));
             log("set port: " + port);
         }
