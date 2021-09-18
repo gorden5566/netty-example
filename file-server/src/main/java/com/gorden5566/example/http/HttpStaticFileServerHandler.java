@@ -264,11 +264,7 @@ public class HttpStaticFileServerHandler extends SimpleChannelInboundHandler<Ful
                     continue;
                 }
 
-                buf.append("<li><a href=\"")
-                    .append(name)
-                    .append("\">")
-                    .append(name)
-                    .append("</a></li>\r\n");
+                addItem(buf, name, f.isDirectory());
             }
         }
 
@@ -281,6 +277,18 @@ public class HttpStaticFileServerHandler extends SimpleChannelInboundHandler<Ful
         response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html; charset=UTF-8");
 
         sendAndCleanupConnection(ctx, response);
+    }
+
+    private void addItem(StringBuilder buf, String name, boolean isDir) {
+        if (isDir) {
+            buf.append("<li>+ <a href=\"");
+        } else {
+            buf.append("<li>- <a href=\"");
+        }
+        buf.append(name)
+            .append("\">")
+            .append(name)
+            .append("</a></li>\r\n");
     }
 
     private void sendRedirect(ChannelHandlerContext ctx, String newUri) {
