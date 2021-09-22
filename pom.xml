@@ -12,6 +12,7 @@
     <name>netty-example</name>
     <modules>
         <module>file-server</module>
+        <module>secure-chat</module>
     </modules>
 
     <properties>
