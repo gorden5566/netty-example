@@ -31,7 +31,7 @@ public final class SecureChatClient {
             Bootstrap b = new Bootstrap();
             b.group(group)
                 .channel(NioSocketChannel.class)
-                .handler(new SecureChatClientInitializer(sslCtx));
+                .handler(new SecureChatClientInitializer(HOST, PORT, sslCtx));
 
             // Start the connection attempt.
             Channel ch = b.connect(HOST, PORT).sync().channel();
