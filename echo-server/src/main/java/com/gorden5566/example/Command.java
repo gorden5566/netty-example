@@ -24,7 +24,7 @@ public class Command {
     @Parameter(names = {"-p", "--port"}, order = 3, description = "set port")
     private Integer port = null;
 
-    @Parameter(names = {"-f", "--fastopen"}, order = 4, description = "set enable fastopen")
+    @Parameter(names = {"-f", "--tcp_fastopen"}, order = 4, description = "set enable tcp_fastopen")
     private Integer fastopen = null;
 
     public static void run(String[] args) throws Exception {
@@ -63,7 +63,7 @@ public class Command {
 
         if (fastopen != null && fastopen > 0) {
             System.setProperty("tcp_fastopen", String.valueOf(fastopen));
-            log("set fastopen: " + fastopen);
+            log("set tcp_fastopen: " + fastopen);
         }
     }
 

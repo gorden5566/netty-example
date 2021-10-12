@@ -2,6 +2,8 @@ package com.gorden5566.example;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
+import io.netty.channel.kqueue.KQueueEventLoopGroup;
+import io.netty.channel.kqueue.KQueueServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -17,12 +19,12 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
 public final class EchoServer {
     static boolean SSL;
     static int PORT;
-//    static int TCP_FASTOPEN;
+    static int TCP_FASTOPEN;
 
     private static void init() {
         SSL = System.getProperty("ssl") != null;
         PORT = Integer.parseInt(System.getProperty("port", "8007"));
-//        TCP_FASTOPEN = Integer.parseInt(System.getProperty("tcp_fastopen", "-1"));
+        TCP_FASTOPEN = Integer.parseInt(System.getProperty("tcp_fastopen", "-1"));
     }
 
     public static void main(String[] args) throws Exception {
@@ -38,13 +40,13 @@ public final class EchoServer {
         }
 
         // Configure the server.
-        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        EventLoopGroup bossGroup = new KQueueEventLoopGroup(1);
+        EventLoopGroup workerGroup = new KQueueEventLoopGroup();
         final EchoServerHandler serverHandler = new EchoServerHandler();
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
-                .channel(NioServerSocketChannel.class)
+                .channel(KQueueServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 100)
                 .handler(new LoggingHandler(LogLevel.INFO))
                 .childHandler(new ChannelInitializer<SocketChannel>() {
@@ -59,9 +61,9 @@ public final class EchoServer {
                     }
                 });
 
-//            if (TCP_FASTOPEN > 0) {
-//                b.option(ChannelOption.TCP_FASTOPEN, 256);
-//            }
+            if (TCP_FASTOPEN > 0) {
+                b.option(ChannelOption.TCP_FASTOPEN, TCP_FASTOPEN);
+            }
 
             // Start the server.
             ChannelFuture f = b.bind(PORT).sync();
