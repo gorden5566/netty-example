@@ -13,6 +13,7 @@
     <modules>
         <module>file-server</module>
         <module>secure-chat</module>
+        <module>echo-server</module>
     </modules>
 
     <properties>
