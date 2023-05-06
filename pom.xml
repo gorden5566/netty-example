@@ -14,6 +14,7 @@
         <module>file-server</module>
         <module>secure-chat</module>
         <module>echo-server</module>
+        <module>tcp-proxy</module>
     </modules>
 
     <properties>
